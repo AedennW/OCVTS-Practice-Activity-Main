@@ -27,6 +27,7 @@
                     <li><a href="#about">about</a></li>
                     <li><a href="#projects">projects</a></li>
                     <li><a href="#contact">contact</a></li>
+                    <li><button type="button" id="themeToggle" onclick="toggleTheme()">Toggle Theme</button></li>
                 </ul>
             </nav>
                 <h1>Aedenn Joseph Wheeler</h1>
@@ -99,14 +100,13 @@
         <section id="skills">
                 <h2>Skills</h2>
                 <h3>Technical Skills</h3>
-                <ul class="skills-list">
+                <ul class="skills-list" id="skillsList">
                     <li>HTML</li>
                     <li>CSS</li>
                     <li>LUA</li>
                     <li>Python
                         <ul><li>Some experience</li></ul>
                     </li>
-                    <li>Git</li>
                     <li>Modeling</li>
                 </ul>
                 <h3>Career Timeline</h3>
@@ -124,22 +124,28 @@
         <div class="container">
         <section id="projects">
             <h2>Projects <span class="project-count-badge" aria-label="Project count"><span id="projectBadgeCount">0</span></span></h2>
+            <label for="projectFilter">Filter projects:</label>
+            <select id="projectFilter" onchange="filterProjects(this.value)">
+                <option value="all">All</option>
+                <option value="web">Web</option>
+                <option value="app">App</option>
+            </select>
             <div class="projects-grid">
-                <article class="project-card project-one">
+                <article class="project-card project-one" data-category="web">
                     <span class="badge">Featured</span>
                     <figure>
                         <img loading="lazy" src="images/Screenshot 2026-10-08 092202.png" alt="Screenshot of Practice Activity 4 project" width="320" height="180">
                         <figcaption>Practice Activity 4</figcaption>
                     </figure>
                 </article>
-                <article class="project-card project-two">
+                <article class="project-card project-two" data-category="web">
                     <span class="badge badge-new">New</span>
                     <figure>
                         <img loading="lazy" src="images/Screenshot 2026-10-08 093007.png" alt="Screenshot of another Practice Activity 4 page" width="320" height="180">
                         <figcaption>Practice Activity 4</figcaption>
                     </figure>
                 </article>
-                <article class="project-card project-three">
+                <article class="project-card project-three" data-category="app">
                     <figure>
                         <img loading="lazy" src="images/Screenshot 2026-10-08 093247.png" alt="Screenshot of a third Practice Activity 4 page" width="320" height="180">
                         <figcaption>Practice Activity 4</figcaption>
@@ -256,6 +262,56 @@
             console.log("Welcome to Aedenn's Portfolio!");
             console.warn('Did you know Wombats are the only known animals on Earth that produce square-shaped poop.');
             console.table(['HTML', 'CSS', 'LUA', 'Python', 'Git', 'Modeling']);
+            const extraSkills = ["JavaScript", "React", "Node.js", "Git"];
+            const skillsList = document.querySelector('#skillsList');
+            const skillCategories = {
+                Frontend: ["JavaScript", "React"],
+                Backend: ["Node.js", "Git"]
+            };
+            const categoryNames = Object.keys(skillCategories);
+            for (let i = 0; i < extraSkills.length; i++) {
+                const skill = extraSkills[i];
+                const category = categoryNames.find(function (name) {
+                    return skillCategories[name].includes(skill);
+                });
+                const listItem = document.createElement('li');
+                listItem.textContent = skill + ' (' + category + ')';
+                skillsList.appendChild(listItem);
+            }
+
+            function filterProjects(category) {
+                let visibleCategory;
+                switch (category) {
+                    case 'web':
+                        visibleCategory = 'web';
+                        break;
+                    case 'app':
+                        visibleCategory = 'app';
+                        break;
+                    case 'all':
+                    default:
+                        visibleCategory = 'all';
+                        break;
+                }
+
+                document.querySelectorAll('.project-card').forEach(function (card) {
+                    const shouldShow = visibleCategory === 'all' || card.dataset.category === visibleCategory;
+                    if (shouldShow) {
+                        card.style.display = '';
+                        requestAnimationFrame(function () {
+                            card.classList.remove('filter-hidden');
+                        });
+                    } else {
+                        card.classList.add('filter-hidden');
+                        setTimeout(function () {
+                            if (card.classList.contains('filter-hidden')) {
+                                card.style.display = 'none';
+                            }
+                        }, 200);
+                    }
+                });
+            }
+
             function updateProjectCount() {
                 var projectRows = document.querySelectorAll('table tbody tr');
                 var projectCount = projectRows.length;
@@ -351,6 +407,19 @@
                 experienceYears + (experienceYears === 1 ? ' year, ' : ' years, ') +
                 remainingMonths + (remainingMonths === 1 ? ' month' : ' months');
 
+                let isDark = false;
+
+                function toggleTheme() {
+                    if (!isDark) {
+                        document.body.style.background = '#1e293b';
+                        document.body.style.color = '#f8fafc';
+                    }
+                    else {
+                        document.body.style.background = '#ffffff';
+                        document.body.style.color = '#000000';
+                    }
+                    isDark = !isDark;
+                }
         </script>
     </body>
    

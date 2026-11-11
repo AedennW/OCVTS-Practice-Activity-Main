@@ -278,7 +278,12 @@ tr:hover {
 .project-card { 
     box-shadow: 0 4px 6px rgba(0,0,0,0.07);
     margin: 0;
-    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    transition: opacity 0.2s ease, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+}
+
+.project-card.filter-hidden {
+    opacity: 0;
+    transform: scale(0.96);
 }
 
 .project-card:hover {
