@@ -6,46 +6,68 @@
         <meta name="author" content="Aedenn Wheeler">
         <meta name="description" content="A portfolio showcasing my web development work.">
         <link rel="stylesheet" href="style.css">
-        <meta og:title og:image>
-        <title>Aedenn</title>
+        <meta property="og:title" content="Aedenn Wheeler - Portfolio">
+        <meta property="og:image" content="images/Screenshot 2026-10-08 092202.png">
+        <title>Aedenn Wheeler - Portfolio</title>
         <style>
-            * {
+            html {
                 scroll-behavior: smooth;
             }
         </style>
-    <link rel="icon" href="images/money_22144.ico">
     </head>
     <body id="top">
+        <!-- Portfolio Website -->
+        <h1>Hello World</h1>
+        <p lang="es">Hola, mundo.</p>
+        <!-- Header / Hero Section -->
         <header>
+            <!-- Navigation -->
             <nav>
-                <a href="#about">about</a>
-                <a href="#projects">projects</a>
-                <a href="#contacts">contact</a>
+                <ul>
+                    <li><a href="#about">about</a></li>
+                    <li><a href="#projects">projects</a></li>
+                    <li><a href="#contact">contact</a></li>
+                </ul>
             </nav>
                 <h1>Aedenn Joseph Wheeler</h1>
-                <h2><strong>Newbie Developer</strong></h2>
-                <p>Hello my name is Aedenn and I am a new student in <em>OCVTS</em>.<br>I came here to learn Computer Science the cool stuff.<br> I always wanted to code
+                <h2><em>Newbie Developer</em></h2>
+                <p>Hello my name is Aedenn and I am a <strong>new student developer</strong> in <em>OCVTS</em>.<br>I came here to learn Computer Science the cool stuff.<br> I always wanted to code
                 even when I was a kid. So this is the begining!
                 </p>
         </header>
         <main>
             <div class="container">
+        <!-- About Section -->
         <section id="about">
             <h2>About Me</h2>
+            <div class="about-content">
             <p>Hello My name is <strong>Aedenn Wheeler</strong>, I am 16 years old as when im making this, I live in Lacey Township, and I go to Lacey Township Highschool.</p>
             <hr>
             <p>My passion is to go to <em>NJIT</em> and get at most a <em>Majors Degree in Computer Science</em>.</p>
             <hr>
             <p>I am currently a Junior in Highschool and I don't have a job so <br>HIRE ME PLEASE!<br> besides that I don't have much education yet but I will be growing that by the years.</p>
+            <aside>
+                <h3>Quick Facts</h3>
+                <p>Location: Lacey Township, Lanoka Harbour</p>
+                <p>Availability: 3pm-10pm</p>
+                <p>Favorite Editor: ME!</p>
+                <details>
+                    <summary>Frequently asked question</summary>
+                    <p>What am I learning? I am learning computer science and web development.</p>
+                </details>
+            </aside>
+            </div>
             <hr>
         <div class="Media">
             <video controls width="320" poster="https://miro.medium.com/0*A7MUqyCLvZDcHkfM.jpg">
-            <source src="" type="video/mp4">
+            <track kind="captions" src="audio/media-placeholder.vtt" srclang="en" label="English">
+            <!-- Add a video file path here -->
             Your browser does not support the video tag.
             </video>
 
             <video controls width="320" poster="https://miro.medium.com/0*A7MUqyCLvZDcHkfM.jpg">
-            <source src="" type="video/mp4">
+            <track kind="captions" src="audio/media-placeholder.vtt" srclang="en" label="English">
+            <!-- Add a video file path here -->
              Your browser does not support the video tag.
             </video>
 
@@ -58,43 +80,71 @@
             Your browser does not support the audio element.
             </audio>
         </div>
-        <div class="about-content">
-        <aside>
-            <h3>Quick Facts</h3>
-            <p>Location: Lacey Township, Lanoka Harbour</p>
-            <p>Availability: 3pm-10pm</p>
-            <p>Favorite Editor:ME!</p>
-        </aside>
-        </div>
-        <hr>
             <mark>Currently Reading: Nothing</mark>
             <p>My Philosophy.</p>
             <blockquote>"I was born to make mistakes, not to fake perfection." - <cite>Drake</cite></blockquote>
         <figure>
-            <img src="https://miro.medium.com/0*A7MUqyCLvZDcHkfM.jpg" alt="cute cat" width="400px" height="400px">
+            <a href="https://miro.medium.com/0*A7MUqyCLvZDcHkfM.jpg" target="_blank" rel="noopener noreferrer">
+                <img class="profile-img" src="https://miro.medium.com/0*A7MUqyCLvZDcHkfM.jpg" alt="A cute cat" width="400" height="400">
+            </a>
             <figcaption class="tagline">My name is aedenn and this is all about me</figcaption>
         </figure>  
         <hr>
         </section>
         </div>
 
+        <!-- Chapter 11 -->
+        <div class="container">
+        <section id="skills">
+                <h2>Skills</h2>
+                <h3>Technical Skills</h3>
+                <ul class="skills-list">
+                    <li>HTML</li>
+                    <li>CSS</li>
+                    <li>LUA</li>
+                    <li>Python
+                        <ul><li>Some experience</li></ul>
+                    </li>
+                    <li>Git</li>
+                    <li>Modeling</li>
+                </ul>
+                <h3>Career Timeline</h3>
+                <ol class="timeline" start="2026">
+                    <li><strong>Student Developer</strong> <em>2026</em><br><p>Learning web development and building portfolio projects.</p></li>
+                    <li><strong>Programming Practice</strong> <em>2026</em><br><p>Practicing Python and other programming skills.</p></li>
+                    <li><strong>Web Development</strong> <em>2026</em><br><p>Building pages with HTML and CSS.</p></li>
+                    <li><strong>Getting Started</strong> <em>2026</em><br><p>Beginning to explore computer science.</p></li>
+                </ol>
+            </section>
+            <hr>
+        </div>
+
+        <!-- Projects Section -->
         <div class="container">
         <section id="projects">
-            <h1>Projects</h1>
+            <h2>Projects</h2>
             <div class="projects-grid">
-                <figure class="project-card">
-                <img src="images/Screenshot 2026-10-08 092202.png" alt="Thumbnail" style="width:20%">
-                <figcaption>Practice Activity 4</figcaption>
-            </figure>
-                <figure class="project-card">
-                <img src="images/Screenshot 2026-10-08 093007.png" alt="Thumbnail" style="width:20%">
-                <figcaption>Practice Activity 4</figcaption>
-            </figure>
-                <figure class="project-card">
-                <img src="images/Screenshot 2026-10-08 093247.png" alt="Thumbnail" style="width:20%">
-                    <figcaption>Practice Activity 4</figcaption>
-                </figure>
-
+                <article class="project-card project-one">
+                    <span class="badge">Featured</span>
+                    <figure>
+                        <img loading="lazy" src="images/Screenshot 2026-10-08 092202.png" alt="Screenshot of Practice Activity 4 project" width="320" height="180">
+                        <figcaption>Practice Activity 4</figcaption>
+                    </figure>
+                </article>
+                <article class="project-card project-two">
+                    <span class="badge badge-new">New</span>
+                    <figure>
+                        <img loading="lazy" src="images/Screenshot 2026-10-08 093007.png" alt="Screenshot of another Practice Activity 4 page" width="320" height="180">
+                        <figcaption>Practice Activity 4</figcaption>
+                    </figure>
+                </article>
+                <article class="project-card project-three">
+                    <figure>
+                        <img loading="lazy" src="images/Screenshot 2026-10-08 093247.png" alt="Screenshot of a third Practice Activity 4 page" width="320" height="180">
+                        <figcaption>Practice Activity 4</figcaption>
+                    </figure>
+                </article>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -125,73 +175,134 @@
                         <td>Completed</td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3">Total Projects</th>
+                        <td>3</td>
+                    </tr>
+                </tfoot>
             </table>
             <hr>
         </section>
-
-        
-        <section id="skills">
-                <h1>Skills</h1>
-                <h3>Technical Skills</h3>
-                <ul class="skills-list">
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>LUA</li>
-                    <li>Python
-                        <ul><li>some experience</li></ul>
-                    </li>
-                    <li>Git</li>
-                    <li>Modeling</li>
-                </ul>
-                <h3>Career Timeline</h3>
-                <ol class="timeline">
-                    <li><strong>Noneting</strong> <em>year. 2026</em> <br><p>Noneting,Noneting,Noneting,Noneting,Noneting</p></li>
-                    <li><strong>Noneting</strong> <em>year. 2026</em><br><p>Noneting,Noneting,Noneting,Noneting,Noneting</p></li>
-                    <li><strong>Noneting</strong> <em>year. 2026</em><br><p>Noneting,Noneting,Noneting,Noneting,Noneting</p></li>
-                    <li><strong>Noneting</strong> <em>year. 2026</em><br><p>Noneting,Noneting,Noneting,Noneting,Noneting</p></li>
-                </ol>
-            </section>
-            <hr>
-
-        <section id="contacts">
-            <h1>Contacts</h1>
-            <a href="https://github.com/AedennW" target="_blank" rel="noopener noreferrer">My Github</a>
+        <!-- Contact Section -->
+        <button type="button" id="toggleContact">Hide Contact Section</button>
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <a href="mailto:aedennwheeler15@gmail.com?subject=Portfolio%20Inquiry">Email</a>
             <br>
-            <a href="#top" class="backtotop">back to top</a>
+            <a href="tel:6092907309">Phone</a>
             <br>
-            <a href="mailto:aedennwheeler15@gmail.com?subject=Portfolio Inquiry">My Email</a>
+            <button type="button" id="newsletterButton">Newsletter signup</button>
             <br>
-            <a href="tele:6092907309">My Phone number</a>
-            <br>
-            <a href="javascript:window.print()">Print this Page</a>
-            <br>
-            <a href="#" onclick="alert('Coming Soon!')">?</a>
-            <form action="#" method="POST" id="contactForm">
+            <button type="button" id="helloButton">Click Me!</button>
+            <button type="button" id="clearConsoleButton">Clear the Console</button>
+            <form action="#" method="POST" id="contactForm" class="container-narrow">
                 <fieldset class="contact-form">
                     <legend>Contact Us</legend>
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" rows="5" placeholder="Your Message"></textarea>
-                <button type="submit">Send Message🚀</button>
-                <select name="ProjectType">
-                </fieldset>
-                    <option value="idk">idk</option>
-                    <option value="idk">idk</option>
-                    <option value="idk">idk</option>
-                    <option value="idk">idk</option>
-                </select>
+                    <input type="hidden" name="timestamp" id="formTimestamp">
+                    <label for="name">Name</label>
+                    <input id="name" type="text" name="name" placeholder="Your Name" required>
+                    <label for="email">Email</label>
+                    <input id="email" type="email" name="email" placeholder="Your Email" required>
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Your Message"></textarea>
+                    <label for="projectType">Project type</label>
+                    <select id="projectType" name="projectType">
+                        <option value="website">Website</option>
+                        <option value="application">Application</option>
+                        <option value="game">Game</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <label for="referral">How did you hear about me?</label>
+                    <input id="referral" name="referral" list="referralOptions">
+                    <datalist id="referralOptions">
+                        <option value="School"></option>
+                        <option value="Friend"></option>
+                        <option value="Online"></option>
+                    </datalist>
+                    <fieldset>
+                        <legend>Budget</legend>
+                        <label><input type="radio" name="budget" value="1000-5000">$1k-$5k</label>
+                        <label><input type="radio" name="budget" value="5000-15000">$5k-$15k</label>
+                        <label><input type="radio" name="budget" value="15000-plus">$15k+</label>
+                    </fieldset>
                 <fieldset>
                     <legend>Subscribe</legend>
-                <label>Subscribe to newsletters</label>
-                <input type="checkbox" name="newsletter">
+                    <label><input type="checkbox" name="newsletter"> Subscribe to updates</label>
+                </fieldset>
+                    <button type="submit">Send Message 🚀</button>
+                    <button type="button" id="clearFormButton">Clear Form</button>
+                    <button type="button" id="printButton">Print</button>
+                    <output id="formConfirmation" aria-live="polite"></output>
                 </fieldset>
             </form>
             </section>
             </div>
         </main>
+        <!-- Footer -->
         <footer>
-            <!--Content goes here-->
+            <a href="https://github.com/AedennW" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+            <a href="mailto:aedennwheeler15@gmail.com">Email</a>
+            <p>&copy; <span id="year">2023</span> Aedenn Wheeler</p>
+            <p>Last updated: <time id="lastUpdated"></time></p>
+            <!-- TODO: Add more portfolio projects in a future chapter. -->
         </footer>
+        <button class="backtotop" id="backToTop" type="button" aria-label="Back to top">&#8679;</button>
+        <script>
+            console.log("Welcome to Aedenn's Portfolio!");
+            console.warn('Did you know Wombats are the only known animals on Earth that produce square-shaped poop.');
+            console.table(['HTML', 'CSS', 'LUA', 'Python', 'Git', 'Modeling']);
+            function getCurrentYear() {
+               return new Date().getFullYear();
+            }
+            console.log(getCurrentYear());
+            var year = document.getElementById('year');
+            year.textContent = getCurrentYear();
+            document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString();
+            document.getElementById('formTimestamp').value = Date.now();
+            document.getElementById('helloButton').addEventListener('click', function () {
+                alert('Thanks for visiting!');
+            });
+            document.getElementById('clearConsoleButton').addEventListener('click', function () {
+                console.clear();
+            });
+            document.getElementById('clearFormButton').addEventListener('click', function () {
+                document.getElementById('contactForm').reset();
+            });
+            document.getElementById('contactForm').addEventListener('reset', function () {
+                document.getElementById('formTimestamp').value = Date.now();
+                document.getElementById('formConfirmation').textContent = '';
+            });
+            document.getElementById('printButton').addEventListener('click', function () {
+                window.print();
+            });
+            document.getElementById('newsletterButton').addEventListener('click', function () {
+                alert('Coming soon!');
+            });
+            document.getElementById('contactForm').addEventListener('submit', function (event) {
+                event.preventDefault();
+                document.getElementById('formConfirmation').textContent = 'This demo form does not send messages yet.';
+            });
+            var contactSection = document.getElementById('contact');
+            var toggleContact = document.getElementById('toggleContact');
+            toggleContact.addEventListener('click', function () {
+                contactSection.hidden = !contactSection.hidden;
+                toggleContact.textContent = contactSection.hidden ? 'Show Contact Section' : 'Hide Contact Section';
+            });
+            var backToTop = document.getElementById('backToTop');
+            var navigation = document.querySelector('nav');
+            window.addEventListener('scroll', function () {
+                var scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+                var scrollProgress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+                backToTop.style.display = window.scrollY > 300 ? 'block' : 'none';
+                backToTop.style.setProperty('--scroll-progress', scrollProgress + '%');
+                navigation.classList.toggle('nav-scrolled', window.scrollY > 0);
+            });
+            backToTop.addEventListener('click', function () {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        </script>
     </body>
    
 </html>
