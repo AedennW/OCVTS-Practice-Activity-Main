@@ -59,6 +59,7 @@
             </div>
             <hr>
         <div class="Media">
+            <h1 id="Countdown"><span id="time">0</span>Days</h1>
             <video controls width="320" poster="https://miro.medium.com/0*A7MUqyCLvZDcHkfM.jpg">
             <track kind="captions" src="audio/media-placeholder.vtt" srclang="en" label="English">
             <!-- Add a video file path here -->
@@ -122,7 +123,7 @@
         <!-- Projects Section -->
         <div class="container">
         <section id="projects">
-            <h2>Projects</h2>
+            <h2>Projects <span class="project-count-badge" aria-label="Project count"><span id="projectBadgeCount">0</span></span></h2>
             <div class="projects-grid">
                 <article class="project-card project-one">
                     <span class="badge">Featured</span>
@@ -145,6 +146,7 @@
                     </figure>
                 </article>
             </div>
+            <p id="projectCount">Projects in table: 0</p>
             <table>
                 <thead>
                     <tr>
@@ -154,7 +156,7 @@
                       <th>Status</th>  
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="projectTableBody">
                     <tr>
                         <td>Mini Project 1</td>
                         <td>Software</td>
@@ -196,7 +198,7 @@
             <br>
             <button type="button" id="helloButton">Click Me!</button>
             <button type="button" id="clearConsoleButton">Clear the Console</button>
-            <form action="#" method="POST" id="contactForm" class="container-narrow">
+            <form action="#" method="POST" id="contactForm" class="container-narrow" novalidate>
                 <fieldset class="contact-form">
                     <legend>Contact Us</legend>
                     <input type="hidden" name="timestamp" id="formTimestamp">
@@ -245,6 +247,7 @@
             <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="mailto:aedennwheeler15@gmail.com">Email</a>
             <p>&copy; <span id="year">2023</span> Aedenn Wheeler</p>
+            <p>Experience: <span id="expDuration">0 years, 0 months</span></p>
             <p>Last updated: <time id="lastUpdated"></time></p>
             <!-- TODO: Add more portfolio projects in a future chapter. -->
         </footer>
@@ -253,6 +256,38 @@
             console.log("Welcome to Aedenn's Portfolio!");
             console.warn('Did you know Wombats are the only known animals on Earth that produce square-shaped poop.');
             console.table(['HTML', 'CSS', 'LUA', 'Python', 'Git', 'Modeling']);
+            function updateProjectCount() {
+                var projectRows = document.querySelectorAll('table tbody tr');
+                var projectCount = projectRows.length;
+                console.log(projectCount);
+                document.getElementById('projectCount').textContent = 'Projects in table: ' + projectCount;
+                document.getElementById('projectBadgeCount').textContent = projectCount;
+                document.querySelector('tfoot td').textContent = projectCount;
+            }
+            updateProjectCount();
+            var projectTableBody = document.getElementById('projectTableBody');
+            new MutationObserver(updateProjectCount).observe(projectTableBody, { childList: true });
+
+            function validateForm() {
+                var name = document.getElementById('name').value.trim();
+                var email = document.getElementById('email').value.trim();
+                var confirmation = document.getElementById('formConfirmation');
+
+                if (name === '' || email === '') {
+                    alert('Please fill in all fields');
+                    confirmation.textContent = 'Please fill in all fields.';
+                    return false;
+                }
+                if (!email.includes('@') || !email.includes('.')) {
+                    alert('Please enter a valid email address.');
+                    confirmation.textContent = 'Please enter a valid email address.';
+                    return false;
+                }
+
+                alert('Message sent!');
+                confirmation.textContent = 'This demo form does not send messages yet.';
+                return false;
+            }
             function getCurrentYear() {
                return new Date().getFullYear();
             }
@@ -282,7 +317,7 @@
             });
             document.getElementById('contactForm').addEventListener('submit', function (event) {
                 event.preventDefault();
-                document.getElementById('formConfirmation').textContent = 'This demo form does not send messages yet.';
+                validateForm();
             });
             var contactSection = document.getElementById('contact');
             var toggleContact = document.getElementById('toggleContact');
@@ -302,6 +337,20 @@
             backToTop.addEventListener('click', function () {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
+            var experienceStartDate = new Date(2020, 6, 1);
+            var currentDate = new Date();
+            var experienceMonths =
+                (currentDate.getFullYear() - experienceStartDate.getFullYear()) * 12 +
+                currentDate.getMonth() - experienceStartDate.getMonth();
+            if (currentDate.getDate() < experienceStartDate.getDate()) {
+                experienceMonths--;
+            }
+            var experienceYears = Math.floor(experienceMonths / 12);
+            var remainingMonths = experienceMonths % 12;
+            document.getElementById('expDuration').textContent =
+                experienceYears + (experienceYears === 1 ? ' year, ' : ' years, ') +
+                remainingMonths + (remainingMonths === 1 ? ' month' : ' months');
+
         </script>
     </body>
    
