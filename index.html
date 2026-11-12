@@ -420,6 +420,60 @@
                     }
                     isDark = !isDark;
                 }
+                
+                const projects = [
+                    {
+                        title: 'Travel Destination Showcase',
+                        tech: ['HTML', 'CSS'],
+                        image: 'images/Travel-Destination-Showcase-Image.png',
+                        description: 'A showcase of unimaginable places on just one website.',
+                        featured: true,
+                        links: {
+                            github: "https://github.com/AedennW/OCVTS-Mini-Project-5",
+                            live: "https://aedennw.github.io/OCVTS-Mini-Project-5/"
+                        }
+                    },
+                    {
+                        title: 'Product Landing Page',
+                        tech: ['HTML','CSS'],
+                        image: 'images/Product-Landing-Page-Image.png',
+                        description: 'A website landing my resturant on the web!',
+                        featured: true,
+                        links: {
+                            github: "https://github.com/AedennW/OCVTS-Mini-Project-3",
+                            live: "https://aedennw.github.io/OCVTS-Mini-Project-3/"
+                        }
+                    },
+                    {
+                        title: 'Quiz Builder',
+                        tech: ['HTML','CSS','JS'],
+                        image: 'images/Quiz-Builder-Website-Image.png',
+                        description: 'A quiz website ask questions that you might never ask before.',
+                        featured: false,
+                        links: {
+                            github: "https://github.com/AedennW/Mini-Project-6",
+                            live: "https://aedennw.github.io/Mini-Project-6/"
+                        }
+                    }
+                ]
+                const skills = {
+                    frontend: ["HTML", "CSS", "JS"],
+                    backend: ["Node.js"],
+                    tools: ["Git", "VS Code", "Google Classroom"],
+                    listAll() {
+                        return Object.values(skills)
+                            .filter(Array.isArray)
+                            .flat();
+                    }
+                };
+
+                console.log(skills.frontend.length);
+                console.log(projects);
+                console.log(projects[1].title);
+                skills.backend.push("Skidding");
+                console.log(skills.listAll());
+
+                
         </script>
     </body>
    
