@@ -247,6 +247,7 @@
             <h2>Chapter 19: Control Numbers and Strings</h2>
             <p>This chapter adds a random featured project, cleans up contact form text, and shows the date the portfolio was updated.</p>
             <p><strong>Challenge 19.1:</strong> A random project is picked when the page loads. The same project will not be picked twice in a row.</p>
+            <p><strong>Modding Challenge 19.1:</strong> The featured project picker checks the last project and picks again if it gets the same one.</p>
             <details class="chapter-reflections">
                 <summary>Challenge 19.1 Reflection Questions</summary>
                 <p><strong>Why multiply Math.random() by the array length?</strong> It gives us a number that can match an index in the projects array.</p>
@@ -254,6 +255,7 @@
                 <p><strong>Can Math.random() ever return exactly 1?</strong> No. It returns a number from zero up to, but not including, one.</p>
             </details>
             <p><strong>Challenge 19.2:</strong> The contact form removes extra spaces, changes the email to lowercase, removes numbers from the name, and capitalizes each word.</p>
+            <p><strong>Modding Challenge 19.2:</strong> Names are changed to have a capital letter at the start of each word, and the form only accepts letters and spaces for the name.</p>
             <details class="chapter-reflections">
                 <summary>Challenge 19.2 Reflection Questions</summary>
                 <p><strong>Does .trim() remove spaces from the middle of a string?</strong> No. It only removes spaces from the beginning and end.</p>
@@ -261,6 +263,8 @@
                 <p><strong>How is .replace() different from .replaceAll()?</strong> replace() usually changes the first match, while replaceAll() changes every match.</p>
             </details>
             <p><strong>Challenge 19.3:</strong> The footer shows a readable date and this section counts how many seconds the visitor has been on the page.</p>
+            <p><strong>Modding Challenge 19.3:</strong> The page also shows how long ago it was updated using relative time.</p>
+            <p>Relative update time: <span id="relativeUpdated">just now</span></p>
             <p>Time on site: <span id="timeOnSite">0</span> seconds</p>
             <details class="chapter-reflections">
                 <summary>Challenge 19.3 Reflection Questions</summary>
@@ -470,6 +474,30 @@
                 year: 'numeric'
             });
             document.getElementById('lastUpdated').textContent = formattedDate;
+
+            // Chapter 19 Modding: Show how long ago the page was updated
+            const lastUpdatedTime = new Date();
+
+            function updateRelativeTime() {
+                let secondsAgo = Math.floor((new Date() - lastUpdatedTime) / 1000);
+                let relativeText = 'just now';
+
+                if (secondsAgo >= 60 && secondsAgo < 3600) {
+                    let minutesAgo = Math.floor(secondsAgo / 60);
+                    relativeText = minutesAgo + ' minute(s) ago';
+                } else if (secondsAgo >= 3600 && secondsAgo < 86400) {
+                    let hoursAgo = Math.floor(secondsAgo / 3600);
+                    relativeText = hoursAgo + ' hour(s) ago';
+                } else if (secondsAgo >= 86400) {
+                    let daysAgo = Math.floor(secondsAgo / 86400);
+                    relativeText = daysAgo + ' day(s) ago';
+                }
+
+                document.getElementById('relativeUpdated').textContent = relativeText;
+            }
+
+            updateRelativeTime();
+            setInterval(updateRelativeTime, 60000);
 
             // Chapter 19 Modding: Count the time spent on the page
             let secondsOnSite = 0;
