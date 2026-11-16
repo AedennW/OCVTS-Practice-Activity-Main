@@ -246,6 +246,35 @@
             </form>
             </section>
             </div>
+
+        <!-- Chapter 20 -->
+        <section id="window-features" class="container">
+            <h2>Chapter 20: Browser Integration</h2>
+            <p>These features use the browser window to make the portfolio easier to explore and print.</p>
+            <div id="visitWelcome" class="visit-welcome" role="status" aria-live="polite" hidden>
+                Thanks for exploring my portfolio!
+            </div>
+            <div class="visit-tip" aria-live="polite">
+                <strong>Tip of the Visit:</strong>
+                <span id="visitTip">Use the navigation links to explore my projects.</span>
+            </div>
+            <p><strong>Chapter 20.1:</strong> A welcome message appears five seconds after the page loads. A visit tip also changes every ten seconds.</p>
+            <p><strong>Chapter 20.2:</strong> Navigation links scroll smoothly and stop below the sticky navigation bar.</p>
+            <p><strong>Chapter 20.3:</strong> Use the print button to print this portfolio or save it as a PDF.</p>
+            <button type="button" id="printPortfolioButton" onclick="printPortfolio()">Print / Save as PDF</button>
+        </section>
+        <section id="printSummary" class="print-summary" aria-label="Portfolio print summary">
+            <h1>Aedenn Wheeler - Portfolio Summary</h1>
+            <p>I am a student developer learning computer science and web development.</p>
+            <h2>Skills</h2>
+            <p>HTML, CSS, JavaScript, Lua, Python, and Git.</p>
+            <h2>Career Goal</h2>
+            <p>Continue learning software development and work toward studying Computer Science at NJIT.</p>
+            <h2>Projects</h2>
+            <p>Travel Destination Showcase, Product Landing Page, and Quiz Builder.</p>
+            <h2>Contact</h2>
+            <p>Email: aedennwheeler15@gmail.com</p>
+        </section>
         </main>
         <!-- Footer -->
         <footer>
@@ -474,6 +503,54 @@
                 console.log(skills.listAll());
 
                 
+
+            // Chapter 20: Address the Window Object
+            // Challenge 20.1: Delayed Welcome Alert
+            function showWelcomeMessage() {
+                const welcomeMessage = document.getElementById('visitWelcome');
+                welcomeMessage.hidden = false;
+                welcomeMessage.classList.add('welcome-visible');
+                setTimeout(function () {
+                    welcomeMessage.classList.remove('welcome-visible');
+                    welcomeMessage.hidden = true;
+                }, 5000);
+            }
+
+            setTimeout(showWelcomeMessage, 5000);
+
+            // Chapter 20 Modding Challenge 20.1: Rotate a Tip of the Visit
+            const visitTips = [
+                'Use the navigation links to explore my projects.',
+                'Check out the skills section to see what I am learning.',
+                'Use the Print button to save this portfolio as a PDF.'
+            ];
+            let currentTip = 0;
+            setInterval(function () {
+                currentTip = (currentTip + 1) % visitTips.length;
+                document.getElementById('visitTip').textContent = visitTips[currentTip];
+            }, 10000);
+
+            // Chapter 20: Challenge 20.2 - Smooth Scroll Navigation
+            const anchorLinks = document.querySelectorAll('nav a[href^="#"]');
+            anchorLinks.forEach(function (link) {
+                link.addEventListener('click', function (event) {
+                    const target = document.querySelector(link.getAttribute('href'));
+                    if (target) {
+                        event.preventDefault();
+                        const navHeight = navigation.offsetHeight;
+                        const targetPosition = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Chapter 20: Challenge 20.3 - Print Portfolio Button
+            function printPortfolio() {
+                window.print();
+            }
         </script>
     </body>
    
