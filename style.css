@@ -429,93 +429,37 @@ footer {
     }
 }
 
-/* Chapter 20 */
+/* Chapter 20: Browser features */
+
 .visit-welcome {
     position: fixed;
-    right: 24px;
-    bottom: 24px;
+    right: 20px;
+    bottom: 20px;
     z-index: 200;
-    max-width: 320px;
-    padding: 14px 20px;
-    border-radius: 10px;
+    padding: 15px;
     background: #1e293b;
-    color: #ffffff;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    color: white;
+    border-radius: 8px;
     opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.3s;
 }
 
 .visit-welcome.welcome-visible {
     opacity: 1;
-    transform: translateY(0);
 }
 
 .visit-tip {
-    margin: 18px 0;
-    padding: 14px 18px;
+    margin: 15px 0;
+    padding: 12px;
+    background: #eaf2ff;
     border-left: 4px solid var(--accent);
-    background: rgba(37, 99, 235, 0.08);
-    border-radius: 6px;
 }
 
 .print-summary {
     display: none;
 }
 
-@media print {
-    /* Chapter 20: Print Styles */
-    nav,
-    button,
-    .backtotop,
-    .visit-welcome,
-    .visit-tip,
-    #window-features {
-        display: none !important;
-    }
-
-    body {
-        background: #ffffff !important;
-        color: #000000 !important;
-        font-size: 12pt;
-    }
-
-    header,
-    footer,
-    section,
-    h1,
-    h2,
-    h3,
-    p,
-    a {
-        color: #000000 !important;
-        background: #ffffff !important;
-        box-shadow: none !important;
-    }
-
-    header {
-        border-bottom: 1px solid #000000;
-    }
-
-    .print-summary {
-        display: block !important;
-        page-break-after: avoid;
-        color: #000000 !important;
-    }
-
-    a {
-        text-decoration: none;
-    }
-
-    img,
-    video,
-    audio {
-        display: none !important;
-    }
-}
-
-
-/* Chapter 20: Scroll Progress Bar Modding Challenge */
+/* Chapter 20: Scroll progress bar */
 .chapter20-progress {
     position: fixed;
     top: 0;
@@ -524,64 +468,32 @@ footer {
     height: 5px;
     background: var(--accent);
     z-index: 300;
-    transition: width 0.08s linear;
 }
 
 .availability-notice {
-    margin: 16px 0;
-    padding: 14px 18px;
+    margin: 15px 0;
+    padding: 12px;
     border: 1px solid var(--accent);
-    border-radius: 8px;
-    background: rgba(245, 158, 11, 0.1);
+    border-radius: 6px;
 }
 
 .chapter-reflections {
-    margin: 14px 0;
-    padding: 12px 16px;
+    margin: 15px 0;
+    padding: 12px;
     border: 1px solid #cbd5e1;
-    border-radius: 8px;
+    border-radius: 6px;
 }
 
 .chapter-reflections summary {
     cursor: pointer;
-    font-weight: 700;
+    font-weight: bold;
 }
 
 .chapter-reflections p {
     margin: 10px 0;
 }
 
-@media print {
-    /* Chapter 20: Hide browser controls when printing */
-    .chapter20-progress,
-    .availability-notice,
-    .chapter-reflections,
-    #printPortfolioButton,
-    #downloadResumeButton {
-        display: none !important;
-    }
-
-    body.resume-print > *:not(main) {
-        display: none !important;
-    }
-
-    body.resume-print main > *:not(.print-summary) {
-        display: none !important;
-    }
-
-    body.resume-print .print-summary {
-        display: block !important;
-        position: static !important;
-        width: 100%;
-        color: #000000 !important;
-        background: #ffffff !important;
-    }
-}
-
-
-/* Chapter 21: Interact with the Document */
-
-/* Challenge 21.1: JavaScript-created project cards */
+/* Chapter 21: Project cards */
 .projects-grid {
     grid-template-areas: none;
 }
@@ -594,57 +506,50 @@ footer {
 
 #projectLoadStatus {
     margin-top: 10px;
-    font-size: 0.9rem;
 }
 
-/* Challenge 21.2: Live character counter */
+/* Chapter 21: Character counter */
 .character-counter {
     margin: 8px 0 4px;
-    font-weight: 600;
+    font-weight: bold;
 }
 
 .character-progress {
     width: 100%;
     height: 10px;
     margin: 6px 0 18px;
-    overflow: hidden;
-    border-radius: 20px;
     background: #dbeafe;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .character-progress-fill {
     width: 0;
     height: 100%;
-    border-radius: inherit;
     background: var(--primary);
-    transition: width 0.15s ease, background 0.15s ease;
+    border-radius: 10px;
 }
-
 
 #contactSubmitButton:disabled {
     cursor: not-allowed;
-    opacity: 0.55;
-    transform: none;
+    opacity: 0.5;
 }
 
-/* Challenge 21.3: Current navigation link and moving underline */
+/* Chapter 21: Active navigation link */
 nav a {
     position: relative;
-    display: inline-block;
-    padding: 4px 0;
 }
 
 nav a::after {
-    position: absolute;
-    right: 0;
-    bottom: -3px;
-    left: 0;
-    height: 3px;
     content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 3px;
     background: var(--accent);
     transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
+    transition: transform 0.2s;
 }
 
 nav a.active-nav-link::after {
@@ -653,13 +558,61 @@ nav a.active-nav-link::after {
 
 nav a.active-nav-link {
     color: #fbbf24 !important;
-    font-weight: 700;
 }
 
+/* Print styles for Chapters 20 and 21 */
 @media print {
-    /* Chapter 21: Keep interactive practice controls out of printouts. */
+    nav,
+    button,
+    .backtotop,
+    .visit-welcome,
+    .visit-tip,
+    .chapter20-progress,
+    .availability-notice,
+    .chapter-reflections,
+    #window-features,
     #loadMoreProjects,
     .character-progress {
+        display: none !important;
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+    }
+
+    header,
+    section,
+    h1,
+    h2,
+    h3,
+    p,
+    a {
+        color: black !important;
+        background: white !important;
+        box-shadow: none !important;
+    }
+
+    .print-summary {
+        display: block !important;
+    }
+
+    body.resume-print > *:not(main) {
+        display: none !important;
+    }
+
+    body.resume-print main > *:not(.print-summary) {
+        display: none !important;
+    }
+
+    body.resume-print .print-summary {
+        display: block !important;
+        width: 100%;
+    }
+
+    img,
+    video,
+    audio {
         display: none !important;
     }
 }
