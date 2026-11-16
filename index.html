@@ -130,28 +130,11 @@
                 <option value="web">Web</option>
                 <option value="app">App</option>
             </select>
-            <div class="projects-grid">
-                <article class="project-card project-one" data-category="web">
-                    <span class="badge">Featured</span>
-                    <figure>
-                        <img loading="lazy" src="images/Screenshot 2026-10-08 092202.png" alt="Screenshot of Practice Activity 4 project" width="320" height="180">
-                        <figcaption>Practice Activity 4</figcaption>
-                    </figure>
-                </article>
-                <article class="project-card project-two" data-category="web">
-                    <span class="badge badge-new">New</span>
-                    <figure>
-                        <img loading="lazy" src="images/Screenshot 2026-10-08 093007.png" alt="Screenshot of another Practice Activity 4 page" width="320" height="180">
-                        <figcaption>Practice Activity 4</figcaption>
-                    </figure>
-                </article>
-                <article class="project-card project-three" data-category="app">
-                    <figure>
-                        <img loading="lazy" src="images/Screenshot 2026-10-08 093247.png" alt="Screenshot of a third Practice Activity 4 page" width="320" height="180">
-                        <figcaption>Practice Activity 4</figcaption>
-                    </figure>
-                </article>
-            </div>
+            <!-- Chapter 21: Dynamic project cards are created in JavaScript. -->
+            <div class="projects-grid" id="projectsContainer" aria-live="polite"></div>
+            <!-- Chapter 21 Modding Challenge 21.1: Load projects in batches of three. -->
+            <button type="button" id="loadMoreProjects">Load More Projects</button>
+            <p id="projectLoadStatus" aria-live="polite">Loading projects...</p>
             <p id="projectCount">Projects in table: 0</p>
             <table>
                 <thead>
@@ -213,7 +196,13 @@
                     <label for="email">Email</label>
                     <input id="email" type="email" name="email" placeholder="Your Email" required>
                     <label for="message">Message</label>
-                    <textarea id="message" name="message" rows="5" placeholder="Your Message"></textarea>
+                    <!-- Chapter 21: Live character counter. -->
+                    <textarea id="message" name="message" rows="5" maxlength="500" placeholder="Your Message"></textarea>
+                    <p class="character-counter"><span id="charCount">0</span> / 500 characters</p>
+                    <!-- Chapter 21 Modding Challenge 21.2: Character progress bar. -->
+                    <div class="character-progress" role="progressbar" aria-label="Message character limit" aria-valuemin="0" aria-valuemax="500" aria-valuenow="0">
+                        <div id="characterProgressFill" class="character-progress-fill"></div>
+                    </div>
                     <label for="projectType">Project type</label>
                     <select id="projectType" name="projectType">
                         <option value="website">Website</option>
@@ -238,7 +227,7 @@
                     <legend>Subscribe</legend>
                     <label><input type="checkbox" name="newsletter"> Subscribe to updates</label>
                 </fieldset>
-                    <button type="submit">Send Message 🚀</button>
+                    <button type="submit" id="contactSubmitButton">Send Message 🚀</button>
                     <button type="button" id="clearFormButton">Clear Form</button>
                     <button type="button" id="printButton">Print</button>
                     <output id="formConfirmation" aria-live="polite"></output>
@@ -286,6 +275,39 @@
                 <p><strong>What happens to position: fixed elements when printing?</strong> Their display and placement can differ in print output, so this page hides its fixed controls when printing.</p>
             </details>
         </section>
+        <!-- Chapter 21: Interact with the Document -->
+        <section id="chapter21" class="container">
+            <h2>Chapter 21: Interact with the Document</h2>
+            <p>These features use the DOM to create project cards, respond to message input, and highlight the current navigation section.</p>
+
+            <h3>Challenge 21.1: Dynamic Project Rendering</h3>
+            <p>The project cards above are built from the projects array using document.createElement() and appended to the projects container.</p>
+            <details class="chapter-reflections">
+                <summary>Challenge 21.1 Reflection Questions</summary>
+                <p><strong>What is the difference between innerHTML and createElement?</strong> innerHTML reads or replaces HTML using a text string, while createElement makes a new element that JavaScript can change and add to the page.</p>
+                <p><strong>Which is safer against XSS attacks?</strong> createElement with textContent is safer because it treats user-provided text as text instead of running it as HTML.</p>
+                <p><strong>Can you attach event listeners to elements created with createElement?</strong> Yes. You can use addEventListener() on a new element before or after adding it to the page.</p>
+            </details>
+
+            <h3>Challenge 21.2: Live Character Counter</h3>
+            <p>The message box shows how many characters have been typed and changes its counter color near the limit.</p>
+            <details class="chapter-reflections">
+                <summary>Challenge 21.2 Reflection Questions</summary>
+                <p><strong>What is the difference between input and change events?</strong> The input event runs every time the value changes, while change usually runs after the user finishes editing the field.</p>
+                <p><strong>Does input fire for paste actions?</strong> Yes. Pasting text changes the value, so the input event runs.</p>
+                <p><strong>How do you get the remaining characters instead of used characters?</strong> Subtract the current value length from the maximum, such as 500 - message.value.length.</p>
+            </details>
+
+            <h3>Challenge 21.3: Active Navigation Highlighting</h3>
+            <p>The navigation link for the section currently on screen is highlighted with an underline.</p>
+            <details class="chapter-reflections">
+                <summary>Challenge 21.3 Reflection Questions</summary>
+                <p><strong>What is the difference between scrollY and pageYOffset?</strong> They both return the number of pixels the document has scrolled vertically. pageYOffset is the older alias.</p>
+                <p><strong>Why subtract 100 from offsetTop?</strong> It helps account for the sticky navigation so the section is treated as active before it moves underneath the navigation.</p>
+                <p><strong>What is event throttling, and why might you need it here?</strong> Throttling limits how often a scroll handler runs, which can reduce extra work while scrolling.</p>
+            </details>
+        </section>
+
         <section id="printSummary" class="print-summary" aria-label="Portfolio print summary">
             <h1>Aedenn Wheeler - Portfolio Summary</h1>
             <p>I am a student developer learning computer science and web development.</p>
@@ -331,37 +353,11 @@
                 skillsList.appendChild(listItem);
             }
 
+            // Chapter 21: Filter dynamically rendered project cards.
             function filterProjects(category) {
-                let visibleCategory;
-                switch (category) {
-                    case 'web':
-                        visibleCategory = 'web';
-                        break;
-                    case 'app':
-                        visibleCategory = 'app';
-                        break;
-                    case 'all':
-                    default:
-                        visibleCategory = 'all';
-                        break;
-                }
-
-                document.querySelectorAll('.project-card').forEach(function (card) {
-                    const shouldShow = visibleCategory === 'all' || card.dataset.category === visibleCategory;
-                    if (shouldShow) {
-                        card.style.display = '';
-                        requestAnimationFrame(function () {
-                            card.classList.remove('filter-hidden');
-                        });
-                    } else {
-                        card.classList.add('filter-hidden');
-                        setTimeout(function () {
-                            if (card.classList.contains('filter-hidden')) {
-                                card.style.display = 'none';
-                            }
-                        }, 200);
-                    }
-                });
+                selectedProjectCategory = category;
+                visibleProjectCount = 0;
+                renderProjects();
             }
 
             function updateProjectCount() {
@@ -477,7 +473,8 @@
                         title: 'Travel Destination Showcase',
                         tech: ['HTML', 'CSS'],
                         image: 'images/Travel-Destination-Showcase-Image.png',
-                        description: 'A showcase of unimaginable places on just one website.',
+                        description: 'A showcase of destinations and places around the world.',
+                        category: 'web',
                         featured: true,
                         links: {
                             github: "https://github.com/AedennW/OCVTS-Mini-Project-5",
@@ -488,7 +485,8 @@
                         title: 'Product Landing Page',
                         tech: ['HTML','CSS'],
                         image: 'images/Product-Landing-Page-Image.png',
-                        description: 'A website landing my resturant on the web!',
+                        description: 'A landing page that presents a restaurant online.',
+                        category: 'web',
                         featured: true,
                         links: {
                             github: "https://github.com/AedennW/OCVTS-Mini-Project-3",
@@ -499,14 +497,100 @@
                         title: 'Quiz Builder',
                         tech: ['HTML','CSS','JS'],
                         image: 'images/Quiz-Builder-Website-Image.png',
-                        description: 'A quiz website ask questions that you might never ask before.',
+                        description: 'A multiple-choice quiz website built with JavaScript.',
+                        category: 'app',
                         featured: false,
                         links: {
                             github: "https://github.com/AedennW/Mini-Project-6",
                             live: "https://aedennw.github.io/Mini-Project-6/"
                         }
                     }
-                ]
+                ];
+
+                // Chapter 21: Challenge 21.1 - Dynamic Project Rendering
+                const projectsContainer = document.getElementById('projectsContainer');
+                const loadMoreProjectsButton = document.getElementById('loadMoreProjects');
+                const projectLoadStatus = document.getElementById('projectLoadStatus');
+                let visibleProjectCount = 2;
+                let selectedProjectCategory = 'all';
+
+                function renderProjects() {
+                    projectsContainer.innerHTML = '';
+
+                    const filteredProjects = projects.filter(function (project) {
+                        return selectedProjectCategory === 'all' || project.category === selectedProjectCategory;
+                    });
+
+                    const projectsToShow = filteredProjects.slice(0, visibleProjectCount);
+
+                    projectsToShow.forEach(function (project) {
+                        const card = document.createElement('div');
+                        card.className = 'project-card';
+                        card.dataset.category = project.category;
+
+                        if (project.featured) {
+                            const badge = document.createElement('span');
+                            badge.className = 'badge';
+                            badge.textContent = 'Featured';
+                            card.appendChild(badge);
+                        }
+
+                        const figure = document.createElement('figure');
+                        const image = document.createElement('img');
+                        image.src = project.image;
+                        image.alt = project.title + ' project preview';
+                        image.loading = 'lazy';
+                        image.width = 320;
+                        image.height = 180;
+
+                        const caption = document.createElement('figcaption');
+                        caption.textContent = project.title;
+                        figure.appendChild(image);
+                        figure.appendChild(caption);
+
+                        const title = document.createElement('h3');
+                        title.textContent = project.title;
+
+                        const description = document.createElement('p');
+                        description.textContent = project.description;
+
+                        const technologies = document.createElement('p');
+                        technologies.textContent = 'Built with: ' + project.tech.join(', ');
+
+                        const githubLink = document.createElement('a');
+                        githubLink.href = project.links.github;
+                        githubLink.textContent = 'GitHub';
+                        githubLink.target = '_blank';
+                        githubLink.rel = 'noopener noreferrer';
+
+                        const liveLink = document.createElement('a');
+                        liveLink.href = project.links.live;
+                        liveLink.textContent = 'Live Website';
+                        liveLink.target = '_blank';
+                        liveLink.rel = 'noopener noreferrer';
+
+                        card.appendChild(figure);
+                        card.appendChild(title);
+                        card.appendChild(description);
+                        card.appendChild(technologies);
+                        card.appendChild(githubLink);
+                        card.appendChild(document.createTextNode(' | '));
+                        card.appendChild(liveLink);
+                        projectsContainer.appendChild(card);
+                    });
+
+                    loadMoreProjectsButton.hidden = projectsToShow.length >= filteredProjects.length;
+                    projectLoadStatus.textContent = 'Showing ' + projectsToShow.length + ' of ' + filteredProjects.length + ' projects.';
+                }
+
+                // Chapter 21 Modding Challenge 21.1: Load up to three more cards per click.
+                loadMoreProjectsButton.addEventListener('click', function () {
+                    visibleProjectCount += 3;
+                    renderProjects();
+                });
+
+                renderProjects();
+
                 const skills = {
                     frontend: ["HTML", "CSS", "JS"],
                     backend: ["Node.js"],
@@ -613,6 +697,57 @@
             window.addEventListener('afterprint', function () {
                 document.body.classList.remove('resume-print');
             });
+
+            // Chapter 21: Challenge 21.3 - Active Navigation Highlighting
+            // Modding Challenge 21.3: IntersectionObserver watches sections without a scroll handler.
+            const chapter21Sections = document.querySelectorAll('main section[id]');
+            const chapter21NavLinks = document.querySelectorAll('nav a[href^="#"]');
+
+            const sectionObserver = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        chapter21NavLinks.forEach(function (link) {
+                            const isCurrent = link.getAttribute('href') === '#' + entry.target.id;
+                            link.classList.toggle('active-nav-link', isCurrent);
+                            if (isCurrent) {
+                                link.setAttribute('aria-current', 'location');
+                            } else {
+                                link.removeAttribute('aria-current');
+                            }
+                        });
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '-100px 0px -60% 0px',
+                threshold: 0
+            });
+
+            chapter21Sections.forEach(function (section) {
+                sectionObserver.observe(section);
+            });
+
+            // Chapter 21: Challenge 21.2 - Live Character Counter
+            const messageInput = document.getElementById('message');
+            const charCount = document.getElementById('charCount');
+            const characterProgress = document.querySelector('.character-progress');
+            const characterProgressFill = document.getElementById('characterProgressFill');
+            const contactSubmitButton = document.getElementById('contactSubmitButton');
+
+            function updateCharacterCounter() {
+                const usedCharacters = messageInput.value.length;
+                const maxCharacters = 500;
+                const progress = (usedCharacters / maxCharacters) * 100;
+
+                charCount.textContent = usedCharacters;
+                charCount.style.color = usedCharacters > 450 ? '#dc2626' : '';
+                characterProgressFill.style.width = progress + '%';
+                characterProgress.setAttribute('aria-valuenow', usedCharacters);
+                contactSubmitButton.disabled = usedCharacters >= maxCharacters;
+            }
+
+            messageInput.addEventListener('input', updateCharacterCounter);
+            updateCharacterCounter();
         </script>
     </body>
    
