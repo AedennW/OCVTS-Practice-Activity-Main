@@ -620,19 +620,6 @@ footer {
     transition: width 0.15s ease, background 0.15s ease;
 }
 
-.character-progress-fill[style*="width: 90"],
-.character-progress-fill[style*="width: 91"],
-.character-progress-fill[style*="width: 92"],
-.character-progress-fill[style*="width: 93"],
-.character-progress-fill[style*="width: 94"],
-.character-progress-fill[style*="width: 95"],
-.character-progress-fill[style*="width: 96"],
-.character-progress-fill[style*="width: 97"],
-.character-progress-fill[style*="width: 98"],
-.character-progress-fill[style*="width: 99"],
-.character-progress-fill[style*="width: 100"] {
-    background: #dc2626;
-}
 
 #contactSubmitButton:disabled {
     cursor: not-allowed;
