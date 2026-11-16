@@ -577,3 +577,102 @@ footer {
         background: #ffffff !important;
     }
 }
+
+
+/* Chapter 21: Interact with the Document */
+
+/* Challenge 21.1: JavaScript-created project cards */
+.projects-grid {
+    grid-template-areas: none;
+}
+
+.projects-grid .project-card {
+    grid-area: auto;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.75);
+}
+
+#projectLoadStatus {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* Challenge 21.2: Live character counter */
+.character-counter {
+    margin: 8px 0 4px;
+    font-weight: 600;
+}
+
+.character-progress {
+    width: 100%;
+    height: 10px;
+    margin: 6px 0 18px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #dbeafe;
+}
+
+.character-progress-fill {
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--primary);
+    transition: width 0.15s ease, background 0.15s ease;
+}
+
+.character-progress-fill[style*="width: 90"],
+.character-progress-fill[style*="width: 91"],
+.character-progress-fill[style*="width: 92"],
+.character-progress-fill[style*="width: 93"],
+.character-progress-fill[style*="width: 94"],
+.character-progress-fill[style*="width: 95"],
+.character-progress-fill[style*="width: 96"],
+.character-progress-fill[style*="width: 97"],
+.character-progress-fill[style*="width: 98"],
+.character-progress-fill[style*="width: 99"],
+.character-progress-fill[style*="width: 100"] {
+    background: #dc2626;
+}
+
+#contactSubmitButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none;
+}
+
+/* Challenge 21.3: Current navigation link and moving underline */
+nav a {
+    position: relative;
+    display: inline-block;
+    padding: 4px 0;
+}
+
+nav a::after {
+    position: absolute;
+    right: 0;
+    bottom: -3px;
+    left: 0;
+    height: 3px;
+    content: "";
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+}
+
+nav a.active-nav-link::after {
+    transform: scaleX(1);
+}
+
+nav a.active-nav-link {
+    color: #fbbf24 !important;
+    font-weight: 700;
+}
+
+@media print {
+    /* Chapter 21: Keep interactive practice controls out of printouts. */
+    #loadMoreProjects,
+    .character-progress {
+        display: none !important;
+    }
+}
