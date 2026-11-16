@@ -507,85 +507,76 @@
                     }
                 ];
 
-                // Chapter 21: Challenge 21.1 - Dynamic Project Rendering
+                // Chapter 21: Show projects on the page
                 const projectsContainer = document.getElementById('projectsContainer');
-                const loadMoreProjectsButton = document.getElementById('loadMoreProjects');
+                const loadMoreButton = document.getElementById('loadMoreProjects');
                 const projectLoadStatus = document.getElementById('projectLoadStatus');
+
                 let visibleProjectCount = 2;
                 let selectedProjectCategory = 'all';
 
                 function renderProjects() {
                     projectsContainer.innerHTML = '';
 
-                    const filteredProjects = projects.filter(function (project) {
-                        return selectedProjectCategory === 'all' || project.category === selectedProjectCategory;
-                    });
+                    let shownProjects = [];
 
-                    const projectsToShow = filteredProjects.slice(0, visibleProjectCount);
-
-                    projectsToShow.forEach(function (project) {
-                        const card = document.createElement('div');
-                        card.className = 'project-card';
-                        card.dataset.category = project.category;
-
-                        if (project.featured) {
-                            const badge = document.createElement('span');
-                            badge.className = 'badge';
-                            badge.textContent = 'Featured';
-                            card.appendChild(badge);
+                    for (let i = 0; i < projects.length; i++) {
+                        if (selectedProjectCategory === 'all' || projects[i].category === selectedProjectCategory) {
+                            shownProjects.push(projects[i]);
                         }
+                    }
 
-                        const figure = document.createElement('figure');
-                        const image = document.createElement('img');
+                    for (let i = 0; i < visibleProjectCount && i < shownProjects.length; i++) {
+                        let project = shownProjects[i];
+
+                        let card = document.createElement('div');
+                        card.className = 'project-card';
+
+                        let image = document.createElement('img');
                         image.src = project.image;
-                        image.alt = project.title + ' project preview';
-                        image.loading = 'lazy';
-                        image.width = 320;
-                        image.height = 180;
+                        image.alt = project.title;
 
-                        const caption = document.createElement('figcaption');
-                        caption.textContent = project.title;
-                        figure.appendChild(image);
-                        figure.appendChild(caption);
-
-                        const title = document.createElement('h3');
+                        let title = document.createElement('h3');
                         title.textContent = project.title;
 
-                        const description = document.createElement('p');
+                        let description = document.createElement('p');
                         description.textContent = project.description;
 
-                        const technologies = document.createElement('p');
+                        let technologies = document.createElement('p');
                         technologies.textContent = 'Built with: ' + project.tech.join(', ');
 
-                        const githubLink = document.createElement('a');
+                        let githubLink = document.createElement('a');
                         githubLink.href = project.links.github;
                         githubLink.textContent = 'GitHub';
                         githubLink.target = '_blank';
-                        githubLink.rel = 'noopener noreferrer';
 
-                        const liveLink = document.createElement('a');
+                        let liveLink = document.createElement('a');
                         liveLink.href = project.links.live;
                         liveLink.textContent = 'Live Website';
                         liveLink.target = '_blank';
-                        liveLink.rel = 'noopener noreferrer';
 
-                        card.appendChild(figure);
+                        card.appendChild(image);
                         card.appendChild(title);
                         card.appendChild(description);
                         card.appendChild(technologies);
                         card.appendChild(githubLink);
                         card.appendChild(document.createTextNode(' | '));
                         card.appendChild(liveLink);
-                        projectsContainer.appendChild(card);
-                    });
 
-                    loadMoreProjectsButton.hidden = projectsToShow.length >= filteredProjects.length;
-                    projectLoadStatus.textContent = 'Showing ' + projectsToShow.length + ' of ' + filteredProjects.length + ' projects.';
+                        projectsContainer.appendChild(card);
+                    }
+
+                    projectLoadStatus.textContent = 'Showing ' + Math.min(visibleProjectCount, shownProjects.length) + ' of ' + shownProjects.length + ' projects.';
+
+                    if (visibleProjectCount >= shownProjects.length) {
+                        loadMoreButton.hidden = true;
+                    } else {
+                        loadMoreButton.hidden = false;
+                    }
                 }
 
-                // Chapter 21 Modding Challenge 21.1: Load up to three more cards per click.
-                loadMoreProjectsButton.addEventListener('click', function () {
-                    visibleProjectCount += 3;
+                loadMoreButton.addEventListener('click', function () {
+                    visibleProjectCount = visibleProjectCount + 3;
                     renderProjects();
                 });
 
@@ -611,129 +602,146 @@
                 
 
             // Chapter 20: Address the Window Object
-            // Challenge 20.1: Delayed Welcome Alert
+
+            // Show a welcome message after 5 seconds
             function showWelcomeMessage() {
-                const welcomeMessage = document.getElementById('visitWelcome');
+                let welcomeMessage = document.getElementById('visitWelcome');
                 welcomeMessage.hidden = false;
                 welcomeMessage.classList.add('welcome-visible');
+
                 setTimeout(function () {
-                    welcomeMessage.classList.remove('welcome-visible');
                     welcomeMessage.hidden = true;
+                    welcomeMessage.classList.remove('welcome-visible');
                 }, 5000);
             }
 
-            // Store the timeout ID so it can be cancelled if needed.
-            const welcomeTimeout = setTimeout(showWelcomeMessage, 5000);
+            setTimeout(showWelcomeMessage, 5000);
 
-            // Chapter 20 Modding Challenge 20.1: Rotate a Tip of the Visit
+            // Change the visit tip every 10 seconds
             const visitTips = [
                 'Use the navigation links to explore my projects.',
                 'Check out the skills section to see what I am learning.',
                 'Use the Print button to save this portfolio as a PDF.'
             ];
+
             let currentTip = 0;
+
             setInterval(function () {
-                currentTip = (currentTip + 1) % visitTips.length;
+                currentTip = currentTip + 1;
+
+                if (currentTip >= visitTips.length) {
+                    currentTip = 0;
+                }
+
                 document.getElementById('visitTip').textContent = visitTips[currentTip];
             }, 10000);
 
-            // Chapter 20 Modding Challenge 20.1: Limited Availability Countdown
-            const countdownEnd = Date.now() + (24 * 60 * 60 * 1000);
-            function updateAvailabilityCountdown() {
-                const remaining = countdownEnd - Date.now();
-                const countdown = document.getElementById('availabilityCountdown');
-                if (remaining <= 0) {
+            // Simple 24 hour countdown demo
+            let countdownEnd = Date.now() + (24 * 60 * 60 * 1000);
+
+            function updateCountdown() {
+                let timeLeft = countdownEnd - Date.now();
+                let countdown = document.getElementById('availabilityCountdown');
+
+                if (timeLeft <= 0) {
                     countdown.textContent = 'Demo countdown complete.';
-                    clearInterval(countdownInterval);
+                    clearInterval(countdownTimer);
                     return;
                 }
-                const hours = Math.floor(remaining / (1000 * 60 * 60));
-                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+
+                let hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
                 countdown.textContent = hours + 'h ' + minutes + 'm ' + seconds + 's remaining';
             }
-            updateAvailabilityCountdown();
-            const countdownInterval = setInterval(updateAvailabilityCountdown, 1000);
 
-            // Chapter 20: Challenge 20.2 - Smooth Scroll Navigation
+            updateCountdown();
+            let countdownTimer = setInterval(updateCountdown, 1000);
+
+            // Make the navigation links scroll smoothly
             const anchorLinks = document.querySelectorAll('nav a[href^="#"]');
+
             anchorLinks.forEach(function (link) {
                 link.addEventListener('click', function (event) {
-                    const target = document.querySelector(link.getAttribute('href'));
+                    let target = document.querySelector(link.getAttribute('href'));
+
                     if (target) {
                         event.preventDefault();
-                        const navHeight = navigation.offsetHeight;
-                        const targetPosition = target.getBoundingClientRect().top + window.scrollY - navHeight - 12;
+                        let navHeight = navigation.offsetHeight;
+                        let position = target.offsetTop - navHeight - 12;
+
                         window.scrollTo({
-                            top: targetPosition,
+                            top: position,
                             behavior: 'smooth'
                         });
                     }
                 });
             });
 
-            // Chapter 20 Modding Challenge 20.2: Scroll Progress Bar
-            const chapter20Progress = document.getElementById('chapter20Progress');
-            function updateChapter20Progress() {
-                const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
-                chapter20Progress.style.width = progress + '%';
-            }
-            window.addEventListener('scroll', updateChapter20Progress);
-            window.addEventListener('resize', updateChapter20Progress);
-            updateChapter20Progress();
+            // Show the scroll progress at the top of the page
+            let progressBar = document.getElementById('chapter20Progress');
 
-            // Chapter 20: Challenge 20.3 - Print Portfolio Button
+            function updateProgressBar() {
+                let pageHeight = document.documentElement.scrollHeight - window.innerHeight;
+                let scrolled = window.scrollY;
+                let percent = 0;
+
+                if (pageHeight > 0) {
+                    percent = (scrolled / pageHeight) * 100;
+                }
+
+                progressBar.style.width = percent + '%';
+            }
+
+            window.addEventListener('scroll', updateProgressBar);
+            window.addEventListener('resize', updateProgressBar);
+            updateProgressBar();
+
+            // Print the portfolio
             function printPortfolio() {
                 document.body.classList.remove('resume-print');
                 window.print();
             }
 
-            // Chapter 20 Modding Challenge 20.3: Print the Resume Summary
+            // Print the resume summary
             function downloadResume() {
                 document.body.classList.add('resume-print');
                 window.print();
             }
+
             window.addEventListener('afterprint', function () {
                 document.body.classList.remove('resume-print');
             });
 
-            // Chapter 21: Challenge 21.3 - Active Navigation Highlighting
-            // Modding Challenge 21.3: IntersectionObserver watches sections without a scroll handler.
-            const chapter21Sections = document.querySelectorAll('main section[id]');
-            const chapter21NavLinks = document.querySelectorAll('nav a[href^="#"]');
+            // Chapter 21: Highlight the navigation link for the section on screen
+            const pageSections = document.querySelectorAll('main section[id]');
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
 
-            const sectionObserver = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        const currentLink = Array.from(chapter21NavLinks).find(function (link) {
-                            return link.getAttribute('href') === '#' + entry.target.id;
-                        });
+            function highlightNavigation() {
+                let currentSection = '';
 
-                        if (currentLink) {
-                            chapter21NavLinks.forEach(function (link) {
-                                const isCurrent = link === currentLink;
-                                link.classList.toggle('active-nav-link', isCurrent);
-                                if (isCurrent) {
-                                    link.setAttribute('aria-current', 'location');
-                                } else {
-                                    link.removeAttribute('aria-current');
-                                }
-                            });
-                        }
+                for (let i = 0; i < pageSections.length; i++) {
+                    let sectionTop = pageSections[i].offsetTop - 120;
+
+                    if (window.scrollY >= sectionTop) {
+                        currentSection = pageSections[i].id;
+                    }
+                }
+
+                navLinks.forEach(function (link) {
+                    link.classList.remove('active-nav-link');
+
+                    if (link.getAttribute('href') === '#' + currentSection) {
+                        link.classList.add('active-nav-link');
                     }
                 });
-            }, {
-                root: null,
-                rootMargin: '-100px 0px -60% 0px',
-                threshold: 0
-            });
+            }
 
-            chapter21Sections.forEach(function (section) {
-                sectionObserver.observe(section);
-            });
+            window.addEventListener('scroll', highlightNavigation);
+            highlightNavigation();
 
-            // Chapter 21: Challenge 21.2 - Live Character Counter
+            // Chapter 21: Count the characters in the message box
             const messageInput = document.getElementById('message');
             const charCount = document.getElementById('charCount');
             const characterProgress = document.querySelector('.character-progress');
@@ -741,16 +749,27 @@
             const contactSubmitButton = document.getElementById('contactSubmitButton');
 
             function updateCharacterCounter() {
-                const usedCharacters = messageInput.value.length;
-                const maxCharacters = 500;
-                const progress = (usedCharacters / maxCharacters) * 100;
+                let usedCharacters = messageInput.value.length;
+                let maxCharacters = 500;
+                let percent = (usedCharacters / maxCharacters) * 100;
 
                 charCount.textContent = usedCharacters;
-                charCount.style.color = usedCharacters > 450 ? '#dc2626' : '';
-                characterProgressFill.style.width = progress + '%';
-                characterProgressFill.style.background = usedCharacters > 450 ? '#dc2626' : '';
+                characterProgressFill.style.width = percent + '%';
                 characterProgress.setAttribute('aria-valuenow', usedCharacters);
-                contactSubmitButton.disabled = usedCharacters >= maxCharacters;
+
+                if (usedCharacters > 450) {
+                    charCount.style.color = 'red';
+                    characterProgressFill.style.background = 'red';
+                } else {
+                    charCount.style.color = '';
+                    characterProgressFill.style.background = '';
+                }
+
+                if (usedCharacters >= maxCharacters) {
+                    contactSubmitButton.disabled = true;
+                } else {
+                    contactSubmitButton.disabled = false;
+                }
             }
 
             messageInput.addEventListener('input', updateCharacterCounter);
