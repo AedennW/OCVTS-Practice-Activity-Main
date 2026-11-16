@@ -15,7 +15,7 @@
             }
         </style>
     </head>
-    <body id="top">
+    <body id="top">\n        <!-- Chapter 20: Scroll Progress Modding Challenge -->\n        <div id="chapter20Progress" class="chapter20-progress" aria-hidden="true"></div>
         <!-- Portfolio Website -->
         <h1>Hello World</h1>
         <p lang="es">Hola, mundo.</p>
@@ -258,10 +258,33 @@
                 <strong>Tip of the Visit:</strong>
                 <span id="visitTip">Use the navigation links to explore my projects.</span>
             </div>
-            <p><strong>Chapter 20.1:</strong> A welcome message appears five seconds after the page loads. A visit tip also changes every ten seconds.</p>
-            <p><strong>Chapter 20.2:</strong> Navigation links scroll smoothly and stop below the sticky navigation bar.</p>
-            <p><strong>Chapter 20.3:</strong> Use the print button to print this portfolio or save it as a PDF.</p>
+            <p><strong>Chapter 20.1:</strong> A welcome message appears five seconds after the page loads. A visit tip changes every ten seconds, and the sample limited-availability countdown updates every second.</p>
+            <div class="availability-notice">
+                <strong>Limited availability demo:</strong>
+                <span id="availabilityCountdown" role="timer">Loading countdown...</span>
+            </div>
+            <details class="chapter-reflections">
+                <summary>Challenge 20.1 Reflection Questions</summary>
+                <p><strong>What are the two required arguments for setTimeout()?</strong> The function to run and the delay in milliseconds.</p>
+                <p><strong>How do you cancel a timeout before it executes?</strong> Save its ID and pass that ID to clearTimeout().</p>
+                <p><strong>Is setTimeout blocking or non-blocking?</strong> It is non-blocking because the rest of the code continues running.</p>
+            </details>
+            <p><strong>Chapter 20.2:</strong> Navigation links scroll smoothly and stop below the sticky navigation bar. The progress bar at the top fills as you scroll.</p>
+            <details class="chapter-reflections">
+                <summary>Challenge 20.2 Reflection Questions</summary>
+                <p><strong>What does event.preventDefault() stop from happening?</strong> It stops the browser's normal action, such as jumping immediately to an anchor.</p>
+                <p><strong>What is the difference between window.scrollTo() and element.scrollIntoView()?</strong> window.scrollTo() scrolls to page coordinates, while scrollIntoView() scrolls until a chosen element is visible.</p>
+                <p><strong>Can you control the scroll speed with native methods?</strong> Native smooth scrolling lets the browser choose the animation speed; it does not provide a speed setting.</p>
+            </details>
+            <p><strong>Chapter 20.3:</strong> Use the print button to print this portfolio or save it as a PDF. The resume button prints a clean resume summary.</p>
             <button type="button" id="printPortfolioButton" onclick="printPortfolio()">Print / Save as PDF</button>
+            <button type="button" id="downloadResumeButton" onclick="downloadResume()">Download Resume</button>
+            <details class="chapter-reflections">
+                <summary>Challenge 20.3 Reflection Questions</summary>
+                <p><strong>What does window.print() open?</strong> It opens the browser's print dialog.</p>
+                <p><strong>Can you customize the print layout with CSS?</strong> Yes, using an @media print stylesheet.</p>
+                <p><strong>What happens to position: fixed elements when printing?</strong> Their display and placement can differ in print output, so this page hides its fixed controls when printing.</p>
+            </details>
         </section>
         <section id="printSummary" class="print-summary" aria-label="Portfolio print summary">
             <h1>Aedenn Wheeler - Portfolio Summary</h1>
@@ -394,9 +417,8 @@
                 document.getElementById('formTimestamp').value = Date.now();
                 document.getElementById('formConfirmation').textContent = '';
             });
-            document.getElementById('printButton').addEventListener('click', function () {
-                window.print();
-            });
+            // Chapter 20: Print Portfolio Button
+            document.getElementById('printButton').addEventListener('click', printPortfolio);
             document.getElementById('newsletterButton').addEventListener('click', function () {
                 alert('Coming soon!');
             });
@@ -516,7 +538,8 @@
                 }, 5000);
             }
 
-            setTimeout(showWelcomeMessage, 5000);
+            // Store the timeout ID so it can be cancelled if needed.
+            const welcomeTimeout = setTimeout(showWelcomeMessage, 5000);
 
             // Chapter 20 Modding Challenge 20.1: Rotate a Tip of the Visit
             const visitTips = [
@@ -529,6 +552,24 @@
                 currentTip = (currentTip + 1) % visitTips.length;
                 document.getElementById('visitTip').textContent = visitTips[currentTip];
             }, 10000);
+
+            // Chapter 20 Modding Challenge 20.1: Limited Availability Countdown
+            const countdownEnd = Date.now() + (24 * 60 * 60 * 1000);
+            function updateAvailabilityCountdown() {
+                const remaining = countdownEnd - Date.now();
+                const countdown = document.getElementById('availabilityCountdown');
+                if (remaining <= 0) {
+                    countdown.textContent = 'Demo countdown complete.';
+                    clearInterval(countdownInterval);
+                    return;
+                }
+                const hours = Math.floor(remaining / (1000 * 60 * 60));
+                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+                countdown.textContent = hours + 'h ' + minutes + 'm ' + seconds + 's remaining';
+            }
+            updateAvailabilityCountdown();
+            const countdownInterval = setInterval(updateAvailabilityCountdown, 1000);
 
             // Chapter 20: Challenge 20.2 - Smooth Scroll Navigation
             const anchorLinks = document.querySelectorAll('nav a[href^="#"]');
@@ -547,10 +588,31 @@
                 });
             });
 
+            // Chapter 20 Modding Challenge 20.2: Scroll Progress Bar
+            const chapter20Progress = document.getElementById('chapter20Progress');
+            function updateChapter20Progress() {
+                const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+                chapter20Progress.style.width = progress + '%';
+            }
+            window.addEventListener('scroll', updateChapter20Progress);
+            window.addEventListener('resize', updateChapter20Progress);
+            updateChapter20Progress();
+
             // Chapter 20: Challenge 20.3 - Print Portfolio Button
             function printPortfolio() {
+                document.body.classList.remove('resume-print');
                 window.print();
             }
+
+            // Chapter 20 Modding Challenge 20.3: Print the Resume Summary
+            function downloadResume() {
+                document.body.classList.add('resume-print');
+                window.print();
+            }
+            window.addEventListener('afterprint', function () {
+                document.body.classList.remove('resume-print');
+            });
         </script>
     </body>
    
