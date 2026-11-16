@@ -561,7 +561,11 @@ footer {
         display: none !important;
     }
 
-    body.resume-print > *:not(.print-summary) {
+    body.resume-print > *:not(main) {
+        display: none !important;
+    }
+
+    body.resume-print main > *:not(.print-summary) {
         display: none !important;
     }
 
