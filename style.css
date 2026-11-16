@@ -616,3 +616,26 @@ nav a.active-nav-link {
         display: none !important;
     }
 }
+
+
+/* Chapter 19: Featured project banner */
+.featured-project {
+    margin: 20px 0;
+    padding: 15px;
+    background: #eaf2ff;
+    border-left: 5px solid var(--primary);
+    border-radius: 6px;
+}
+
+.featured-project h3 {
+    margin-top: 0;
+}
+
+.featured-project p {
+    margin-bottom: 5px;
+}
+
+/* Chapter 19: Time on site counter */
+#timeOnSite {
+    font-weight: bold;
+}
