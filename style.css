@@ -428,3 +428,88 @@ footer {
         background: linear-gradient(to right, #1e293b, #334155);
     }
 }
+
+/* Chapter 20 */
+.visit-welcome {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 200;
+    max-width: 320px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    background: #1e293b;
+    color: #ffffff;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.visit-welcome.welcome-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.visit-tip {
+    margin: 18px 0;
+    padding: 14px 18px;
+    border-left: 4px solid var(--accent);
+    background: rgba(37, 99, 235, 0.08);
+    border-radius: 6px;
+}
+
+.print-summary {
+    display: none;
+}
+
+@media print {
+    /* Chapter 20: Print Styles */
+    nav,
+    button,
+    .backtotop,
+    .visit-welcome,
+    .visit-tip,
+    #window-features {
+        display: none !important;
+    }
+
+    body {
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 12pt;
+    }
+
+    header,
+    footer,
+    section,
+    h1,
+    h2,
+    h3,
+    p,
+    a {
+        color: #000000 !important;
+        background: #ffffff !important;
+        box-shadow: none !important;
+    }
+
+    header {
+        border-bottom: 1px solid #000000;
+    }
+
+    .print-summary {
+        display: block !important;
+        page-break-after: avoid;
+        color: #000000 !important;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    img,
+    video,
+    audio {
+        display: none !important;
+    }
+}
