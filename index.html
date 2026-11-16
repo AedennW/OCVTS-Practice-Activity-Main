@@ -124,6 +124,12 @@
         <div class="container">
         <section id="projects">
             <h2>Projects <span class="project-count-badge" aria-label="Project count"><span id="projectBadgeCount">0</span></span></h2>
+            <!-- Chapter 19: Featured Project Banner -->
+            <div id="featuredProject" class="featured-project">
+                <h3>Featured Project of the Day</h3>
+                <p id="featuredProjectName">Picking a project...</p>
+                <p id="featuredProjectDescription"></p>
+            </div>
             <label for="projectFilter">Filter projects:</label>
             <select id="projectFilter" onchange="filterProjects(this.value)">
                 <option value="all">All</option>
@@ -236,6 +242,34 @@
             </section>
             </div>
 
+        <!-- Chapter 19: Control Numbers and Strings -->
+        <section id="chapter19" class="container">
+            <h2>Chapter 19: Control Numbers and Strings</h2>
+            <p>This chapter adds a random featured project, cleans up contact form text, and shows the date the portfolio was updated.</p>
+            <p><strong>Challenge 19.1:</strong> A random project is picked when the page loads. The same project will not be picked twice in a row.</p>
+            <details class="chapter-reflections">
+                <summary>Challenge 19.1 Reflection Questions</summary>
+                <p><strong>Why multiply Math.random() by the array length?</strong> It gives us a number that can match an index in the projects array.</p>
+                <p><strong>Why use Math.floor() instead of Math.round()?</strong> Math.floor() rounds down so the index stays between zero and the last array position.</p>
+                <p><strong>Can Math.random() ever return exactly 1?</strong> No. It returns a number from zero up to, but not including, one.</p>
+            </details>
+            <p><strong>Challenge 19.2:</strong> The contact form removes extra spaces, changes the email to lowercase, removes numbers from the name, and capitalizes each word.</p>
+            <details class="chapter-reflections">
+                <summary>Challenge 19.2 Reflection Questions</summary>
+                <p><strong>Does .trim() remove spaces from the middle of a string?</strong> No. It only removes spaces from the beginning and end.</p>
+                <p><strong>What does .toLowerCase() return if the string is already lowercase?</strong> It returns the same lowercase text.</p>
+                <p><strong>How is .replace() different from .replaceAll()?</strong> replace() usually changes the first match, while replaceAll() changes every match.</p>
+            </details>
+            <p><strong>Challenge 19.3:</strong> The footer shows a readable date and this section counts how many seconds the visitor has been on the page.</p>
+            <p>Time on site: <span id="timeOnSite">0</span> seconds</p>
+            <details class="chapter-reflections">
+                <summary>Challenge 19.3 Reflection Questions</summary>
+                <p><strong>What is a template literal, and how is it written?</strong> It is a string written with backticks. It can put variables inside using dollar sign and curly brackets.</p>
+                <p><strong>What does toLocaleDateString() do?</strong> It changes a Date into a date string that is easier to read.</p>
+                <p><strong>How do you get the current month name from a Date object?</strong> You can use toLocaleDateString() with the month option set to long.</p>
+            </details>
+        </section>
+
         <!-- Chapter 20 -->
         <section id="window-features" class="container">
             <h2>Chapter 20: Browser Integration</h2>
@@ -328,6 +362,7 @@
             <a href="mailto:aedennwheeler15@gmail.com">Email</a>
             <p>&copy; <span id="year">2023</span> Aedenn Wheeler</p>
             <p>Experience: <span id="expDuration">0 years, 0 months</span></p>
+            <!-- Chapter 19: Display the last updated date -->
             <p>Last updated: <time id="lastUpdated"></time></p>
             <!-- TODO: Add more portfolio projects in a future chapter. -->
         </footer>
@@ -372,16 +407,45 @@
             var projectTableBody = document.getElementById('projectTableBody');
             new MutationObserver(updateProjectCount).observe(projectTableBody, { childList: true });
 
+            // Chapter 19: Clean up the name before showing it
+            function formatName(name) {
+                name = name.trim();
+                name = name.replace(/[0-9]/g, '');
+                name = name.toLowerCase();
+
+                let words = name.split(' ');
+                let fixedName = '';
+
+                for (let i = 0; i < words.length; i++) {
+                    if (words[i] !== '') {
+                        fixedName = fixedName + words[i].charAt(0).toUpperCase() + words[i].slice(1) + ' ';
+                    }
+                }
+
+                return fixedName.trim();
+            }
+
+            // Chapter 19: Check and format the contact form input
             function validateForm() {
-                var name = document.getElementById('name').value.trim();
-                var email = document.getElementById('email').value.trim();
+                var name = formatName(document.getElementById('name').value);
+                var email = document.getElementById('email').value.trim().toLowerCase();
                 var confirmation = document.getElementById('formConfirmation');
+
+                document.getElementById('name').value = name;
+                document.getElementById('email').value = email;
 
                 if (name === '' || email === '') {
                     alert('Please fill in all fields');
                     confirmation.textContent = 'Please fill in all fields.';
                     return false;
                 }
+
+                if (!/^[a-zA-Z ]+$/.test(name)) {
+                    alert('Please use only letters and spaces in your name.');
+                    confirmation.textContent = 'Please use only letters and spaces in your name.';
+                    return false;
+                }
+
                 if (!email.includes('@') || !email.includes('.')) {
                     alert('Please enter a valid email address.');
                     confirmation.textContent = 'Please enter a valid email address.';
@@ -389,7 +453,7 @@
                 }
 
                 alert('Message sent!');
-                confirmation.textContent = 'This demo form does not send messages yet.';
+                confirmation.textContent = 'Thanks, ' + name + '! This demo form does not send messages yet.';
                 return false;
             }
             function getCurrentYear() {
@@ -398,7 +462,21 @@
             console.log(getCurrentYear());
             var year = document.getElementById('year');
             year.textContent = getCurrentYear();
-            document.getElementById('lastUpdated').textContent = new Date().toLocaleDateString();
+            // Chapter 19: Show the date in a readable format
+            const now = new Date();
+            const formattedDate = now.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            });
+            document.getElementById('lastUpdated').textContent = formattedDate;
+
+            // Chapter 19 Modding: Count the time spent on the page
+            let secondsOnSite = 0;
+            setInterval(function () {
+                secondsOnSite = secondsOnSite + 1;
+                document.getElementById('timeOnSite').textContent = secondsOnSite;
+            }, 1000);
             document.getElementById('formTimestamp').value = Date.now();
             document.getElementById('helloButton').addEventListener('click', function () {
                 alert('Thanks for visiting!');
@@ -506,6 +584,26 @@
                         }
                     }
                 ];
+
+                // Chapter 19: Pick a random project for the featured banner
+                let lastFeaturedIndex = -1;
+
+                function showRandomProject() {
+                    let randomIndex = Math.floor(Math.random() * projects.length);
+
+                    if (projects.length > 1) {
+                        while (randomIndex === lastFeaturedIndex) {
+                            randomIndex = Math.floor(Math.random() * projects.length);
+                        }
+                    }
+
+                    lastFeaturedIndex = randomIndex;
+                    document.getElementById('featuredProjectName').textContent = projects[randomIndex].title;
+                    document.getElementById('featuredProjectDescription').textContent = projects[randomIndex].description;
+                }
+
+                // Chapter 19: Run the featured project picker when the page loads
+                showRandomProject();
 
                 // Chapter 21: Show projects on the page
                 const projectsContainer = document.getElementById('projectsContainer');
